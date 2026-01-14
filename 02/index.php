@@ -1,12 +1,3 @@
-
-//1. Set Up & Start 
- 
-
-//2. Code Commenting 
-   //in line coment
-
-  /* multi-line comment */
-
 <?php
 declare(strict_types=1);
 
