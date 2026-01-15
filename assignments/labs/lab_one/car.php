@@ -16,5 +16,4 @@ public function Info() : string{
     return "Car Make: {$this->make} | Car Model : {$this->model} | Car Year: {$this->year}";
     }
 }
-$car = new Car("Honda","Civic",2012);
-echo $car->Info();
+?>
