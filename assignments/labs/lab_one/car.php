@@ -11,16 +11,10 @@ public function __construct(string $make, string $model, int $year){
     $this->model = $model;
     $this->year = $year;
 }
-public function _Info() : string{
+public function Info() : string{
+
     return "Car Make: {$this->make} | Car Model : {$this->model} | Car Year: {$this->year}";
+    }
 }
-
-
-
-
-
-
-
-
-}
-
+$car = new Car("Honda","Civic",2012);
+echo $car->Info();
