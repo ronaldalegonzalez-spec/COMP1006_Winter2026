@@ -2,7 +2,7 @@
 <main>
   <h2> Order Online - Easy & Simple (And Totally Secure...) 🧁</h2>
   <form action="process.php" method="post">
-
+<!-- STEP ONE - Add Client Side Validation with HTML -->
     <!-- Customer Information -->
     <fieldset>
       <legend>Customer Information</legend>
@@ -15,7 +15,7 @@
         <label for="address">Address</label>
         <input type="text" id="address" name="address" required>
         <label for="email">Email</label>
-        <input type="text" id="email" name="email" required>
+        <input type="email" id="email" name="email" required>
     </fieldset>
 
     <!-- Order Details -->
