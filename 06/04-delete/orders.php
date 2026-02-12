@@ -11,7 +11,7 @@ require "includes/header.php";
 require "includes/connect.php";
 
 // Get all orders (newest first)
-$sql = "SELECT * FROM orders1 ORDER BY created_at DESC";
+$sql = "SELECT * FROM orders ORDER BY created_at DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $orders = $stmt->fetchAll();

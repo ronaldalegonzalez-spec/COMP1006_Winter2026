@@ -112,7 +112,7 @@ if (!empty($errors)) {
 // NOTE: We insert ALL item columns every time.
 // If an item was not ordered, we store 0 for that column.
 $sql = "
-    INSERT INTO orders1 (
+    INSERT INTO orders (
         first_name,
         last_name,
         phone,
@@ -164,7 +164,7 @@ $stmt->bindParam(':comments', $comments);
 
 /* how does an array work with bindParam - we need a reference! $stmt->bindParam(':comments', );*/
 
-$chaosCroissant = $itemsOrdered['chaos_croissant']; 
+$chaosCroissant = $itemsOrdered['chaos_croissant']?? 0; 
 $existentialEclair     = $itemsOrdered['existential_eclair'] ?? 0;
 $procrastinationCookie = $itemsOrdered['procrastination_cookie'] ?? 0;
 

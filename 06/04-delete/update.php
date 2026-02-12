@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error = "First name, last name, and email are required.";
   } else {
 
-    $sql = "UPDATE orders1
+    $sql = "UPDATE orders
             SET first_name = :first_name,
                 last_name = :last_name,
                 phone = :phone,
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 /* -------------------------------------------
    STEP 3: Load existing order data (to echo in the form)
 -------------------------------------------- */
-$sql = "SELECT * FROM orders1 WHERE customer_id = :customer_id";
+$sql = "SELECT * FROM orders WHERE customer_id = :customer_id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':customer_id', $customerId);
 $stmt->execute();

@@ -3,13 +3,13 @@ require "includes/header.php";
 require "includes/connect.php";
 
 // create query 
-
+$sql = "SELECT * FROM  ORDER BY created_at DESC";
 //prepare
-
+$stmt = $pdo->prepare($sql);
 //execute 
-
+$stmt->execute();
 //retrieve all rows returned by a SQL query at once
-
+$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <main class="mt-4">
@@ -23,6 +23,8 @@ require "includes/connect.php";
 
         <?php
           // Calculate total items
+          $total = 
+          $order['chaos_croissant'] + $order['existential_eclair'] + $order['procrastination_cookie'];
         ?>
 
         <li class="mb-3">
