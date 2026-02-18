@@ -1,8 +1,13 @@
 <?php
+//Edit.php
+//Loads selected task data
+//Displays form pre-filled with existing values
+//Sends updated data to process.php
+
 require("db.php");
 require("includes/header.php");
 
-// Check if ID exists
+//Check if ID exists
 if (!isset($_GET['id'])) {
     header("Location: index.php");
     exit();
@@ -10,7 +15,7 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
-// Fetch task data
+//Fetch task data securely using prepared statement
 $stmt = $conn->prepare("SELECT * FROM tasks WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();

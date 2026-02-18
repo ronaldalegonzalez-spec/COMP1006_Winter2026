@@ -6,7 +6,9 @@
 
     <div class="mb-3">
         <label class="form-label">Task Name</label>
-        <input type="text" name="task_name" class="form-control" required>
+        <input type="text" name="task_name" class="form-control" required
+        pattern="[A-Za-z0-9\s]{3,50}" 
+        title="Only letters and numbers, 3-50 characters">
     </div>
 
     <div class="mb-3">
@@ -31,8 +33,11 @@
 
     <div class="mb-3">
         <label class="form-label">Time Spent (hours)</label>
-        <input type="number" name="time_spent" step="0.1" min="0" class="form-control" required>
+        <input type="number" name="time_spent" step="0.1" min="0"  max="1000" class="form-control"  required>
+        
     </div>
+
+    <div class="g-recaptcha" data-sitekey="6Lf8K3AsAAAAANVEfzKLatRVoaZ6EeDMeyiCR6yY"></div>
 
     <button type="submit" name="add_task" class="btn btn-success">
         Save Task
@@ -41,5 +46,7 @@
     <a href="index.php" class="btn btn-secondary">Cancel</a>
 
 </form>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <?php require("includes/footer.php"); ?>
