@@ -1,11 +1,11 @@
 <?php
 // process.php
-// Handles:
-// - Adding new tasks
-// - Updating existing tasks
-// - Server-side validation
-// - reCAPTCHA verification
-// - Secure database operations using prepared statements
+//Handles:
+//Adding new tasks
+//Updating existing tasks
+//Server-side validation
+// reCAPTCHA verification
+//Secure database operations using prepared statements
 
 
 //include database connection

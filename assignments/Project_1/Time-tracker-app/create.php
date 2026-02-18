@@ -1,5 +1,8 @@
 <?php require("includes/header.php"); ?>
 
+<!-- Displays form to create a new task -->
+<!-- Includes client-side validation and Google reCAPTCHA -->
+
 <h2 class="mb-4">Add New Task</h2>
 
 <form action="process.php" method="POST">
@@ -37,12 +40,14 @@
         
     </div>
 
+<!-- Google reCAPTCHA widget -->
     <div class="g-recaptcha" data-sitekey="6Lf8K3AsAAAAANVEfzKLatRVoaZ6EeDMeyiCR6yY"></div>
 
+    <!-- Submit button -->
     <button type="submit" name="add_task" class="btn btn-success">
         Save Task
     </button>
-
+   <!-- Cancel button -->
     <a href="index.php" class="btn btn-secondary">Cancel</a>
 
 </form>
