@@ -146,8 +146,6 @@ else {
     }
 }
 
-
-
     //If errors exist, stop execution
     if (!empty($errors)) {
         foreach ($errors as $error) {
