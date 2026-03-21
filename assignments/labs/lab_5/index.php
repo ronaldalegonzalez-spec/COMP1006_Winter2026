@@ -4,7 +4,7 @@ require "includes/header.php";
 ?>
 
 <div class="container mt-5">
-    <h2>Upload Profile Picture</h2>
+    <h2>Upload Your Random Picture</h2>
 
     <form action="upload.php" method="POST" enctype="multipart/form-data">
         
