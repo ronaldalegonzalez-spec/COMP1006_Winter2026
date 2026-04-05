@@ -62,19 +62,22 @@ if (isset($_POST['update_task'])) {
     }
 
     // prepare secure SQL statement to prevent SQL injection
-    $stmt = $conn->prepare("UPDATE tasks SET task_name=?, category=?, priority=?, due_date=?, time_spent=? WHERE id=?");
+   $stmt = $pdo->prepare("UPDATE tasks 
+SET task_name = :task_name, category = :category, priority = :priority, due_date = :due_date, time_spent = :time_spent 
+WHERE id = :id");
 
-    $stmt->bind_param("ssssdi", $task_name, $category, $priority, $due_date, $time_spent, $id);
+$stmt->execute([
+    ':task_name' => $task_name,
+    ':category' => $category,
+    ':priority' => $priority,
+    ':due_date' => $due_date,
+    ':time_spent' => $time_spent,
+    ':id' => $id
+]);
 
-    if ($stmt->execute()) {
-        header("Location: index.php");
-        exit();
-    } 
-    else {
-        echo "Error: " . $stmt->error;
-    }
+header("Location: index.php");
+exit();
 
-    $stmt->close();
 }
 
 
@@ -155,18 +158,19 @@ else {
     }
 
     // Prepare SQL statement
-    $stmt = $conn->prepare("INSERT INTO tasks (task_name, category, priority, due_date, time_spent) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssd", $task_name, $category, $priority, $due_date, $time_spent);
+    $stmt = $pdo->prepare("INSERT INTO tasks (task_name, category, priority, due_date, time_spent) 
+VALUES (:task_name, :category, :priority, :due_date, :time_spent)");
 
-    if ($stmt->execute()) {
-        header("Location: index.php");
-        exit();
-    } else {
-        die("Error adding task: " . $stmt->error);
-    }
+$stmt->execute([
+    ':task_name' => $task_name,
+    ':category' => $category,
+    ':priority' => $priority,
+    ':due_date' => $due_date,
+    ':time_spent' => $time_spent
+]);
 
-    $stmt->close();
+header("Location: index.php");
+exit();
 }
 
-$conn->close();
 ?>

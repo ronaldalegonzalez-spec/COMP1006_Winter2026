@@ -1,17 +1,19 @@
 <?php
-// Establishes connection to MySQL database using mysqli
-$host = "127.0.0.1";
-$username = "root";
-$password = "";
-$database = "time_tracker";
-$port = 3307;
+// db.php
+// Database connection using PDO
 
-$conn = mysqli_init();
-$conn->real_connect($host, $username, $password, $database, $port);
+$host = "172.31.22.43";
+$dbname = "Ronald200631594";
+$username = "Ronald200631594";
+$password = "cEdLv7vTFS";
 
-// Check database connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+
+    // Set error mode to exception
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
 }
-
 ?>

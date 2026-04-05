@@ -2,19 +2,22 @@
 //Displays all tasks ordered by newest first
 //shows tasks in a table with edit and delete options
 //Priority is displayed using colored Bootstrap badges
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 require("db.php");
 require("includes/header.php");
 
 //Fetch all tasks from database ordered by creation date
-$result = $conn->query("SELECT * FROM tasks ORDER BY created_at DESC");
+$stmt = $pdo->query("SELECT * FROM tasks ORDER BY created_at DESC");
+$tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="mb-3">
     <a href="create.php" class="btn btn-primary">Add New Task</a>
 </div>
 
-<?php if ($result->num_rows > 0): ?>
+<?php if (count($tasks) > 0): ?>
 
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
@@ -30,7 +33,7 @@ $result = $conn->query("SELECT * FROM tasks ORDER BY created_at DESC");
     <tbody>
 
     
-    <?php while($row = $result->fetch_assoc()): ?>
+    <?php foreach ($tasks as $row): ?>
         <tr>
             <td><?php echo htmlspecialchars($row['task_name']); ?></td>
             <td><?php echo htmlspecialchars($row['category']); ?></td>
@@ -54,7 +57,7 @@ $result = $conn->query("SELECT * FROM tasks ORDER BY created_at DESC");
                 <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Delete</a>
             </td>
         </tr>
-    <?php endwhile; ?>
+        <?php endforeach; ?>
 
     </tbody>
 </table>

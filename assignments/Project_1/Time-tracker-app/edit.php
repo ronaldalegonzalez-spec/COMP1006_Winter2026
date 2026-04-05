@@ -16,18 +16,15 @@ if (!isset($_GET['id'])) {
 $id = $_GET['id'];
 
 //Fetch task data securely using prepared statement
-$stmt = $conn->prepare("SELECT * FROM tasks WHERE id = ?");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$result = $stmt->get_result();
+$stmt = $pdo->prepare("SELECT * FROM tasks WHERE id = :id");
+$stmt->execute([':id' => $id]);
 
-if ($result->num_rows !== 1) {
+$task = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$task) {
     echo "Task not found.";
     exit();
 }
-
-$task = $result->fetch_assoc();
-$stmt->close();
 ?>
 
 <h2 class="mb-4">Edit Task</h2>
