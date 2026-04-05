@@ -119,7 +119,7 @@ if (isset($_POST['add_task'])) {
     $priority = htmlspecialchars($priority);
 
 //Verify Google reCAPTCHA response
-$secretKey = "6Lf8K3AsAAAAAALiQbg3i1_UzY1cfugGHcd2Fu7S";
+$secretKey = "6Ldmi6gsAAAAAPHNEX6zxxmqRhNpRHlsh4G5Q4IP";
 $responseKey = $_POST['g-recaptcha-response'];
 
 if (empty($responseKey)) {

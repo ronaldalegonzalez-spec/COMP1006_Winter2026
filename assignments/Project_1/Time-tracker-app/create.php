@@ -41,7 +41,7 @@
     </div>
 
 <!-- Google reCAPTCHA widget -->
-    <div class="g-recaptcha" data-sitekey="6Lf8K3AsAAAAANVEfzKLatRVoaZ6EeDMeyiCR6yY"></div>
+    <div class="g-recaptcha" data-sitekey="6Ldmi6gsAAAAACAh9H_3WlYm_YPtirjovxrv39w0"></div>
 
     <!-- Submit button -->
     <button type="submit" name="add_task" class="btn btn-success">
