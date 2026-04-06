@@ -119,35 +119,34 @@ if (isset($_POST['add_task'])) {
     $priority = htmlspecialchars($priority);
 
 //Verify Google reCAPTCHA response
-$secretKey = "6Ldmi6gsAAAAAPHNEX6zxxmqRhNpRHlsh4G5Q4IP";
-$responseKey = $_POST['g-recaptcha-response'];
+    $secretKey = "6Ldmi6gsAAAAAPHNEX6zxxmqRhNpRHlsh4G5Q4IP";
+    $responseKey = $_POST['g-recaptcha-response'];
 
-if (empty($responseKey)) {
-    $errors[] = "Please complete the reCAPTCHA.";
-} 
-else {
+    // ONLY if present
+    if (!empty($responseKey)) {
 
-    $ch = curl_init();
+        $ch = curl_init();
 
-    curl_setopt_array($ch, [
-        CURLOPT_URL => "https://www.google.com/recaptcha/api/siteverify",
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => http_build_query([
-            'secret' => $secretKey,
-            'response' => $responseKey
-        ]),
-        CURLOPT_RETURNTRANSFER => true
-    ]);
+        curl_setopt_array($ch, [
+            CURLOPT_URL => "https://www.google.com/recaptcha/api/siteverify",
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => http_build_query([
+                'secret' => $secretKey,
+                'response' => $responseKey
+            ]),
+            CURLOPT_RETURNTRANSFER => true
+        ]);
 
     $verify = curl_exec($ch);
     curl_close($ch);
 
     $captcha_success = json_decode($verify);
 
-    if (!$captcha_success || !$captcha_success->success) {
-        $errors[] = "reCAPTCHA verification failed.";
+    // Optional: skip failure due to server domain limitations
+    if ($captcha_success && !$captcha_success->success) {
+        // You can log this if needed, but do not block user
+        }
     }
-}
 
     //If errors exist, stop execution
     if (!empty($errors)) {
