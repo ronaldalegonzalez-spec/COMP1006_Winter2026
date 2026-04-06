@@ -6,7 +6,7 @@
 //Server-side validation
 // reCAPTCHA verification
 //Secure database operations using prepared statements
-
+require("auth.php");
 
 //include database connection
 require "db.php";
@@ -37,6 +37,10 @@ if (isset($_POST['update_task'])) {
     if (!is_numeric($time_spent)) {
         $errors[] = "Time spent must be a number.";
     }
+    
+    if($time_spent < 0 || $time_spent > 1000) {
+    $errors[] = "Time spent must be between 0 and 1000 hours.";
+    }   
 
     //Date validation
    $date = DateTime::createFromFormat('Y-m-d', $due_date);
@@ -59,24 +63,24 @@ if (isset($_POST['update_task'])) {
             echo "<div class='alert alert-danger'>$error</div>";
         }
         exit();
-    }
+        }
 
-    // prepare secure SQL statement to prevent SQL injection
-   $stmt = $pdo->prepare("UPDATE tasks 
-SET task_name = :task_name, category = :category, priority = :priority, due_date = :due_date, time_spent = :time_spent 
-WHERE id = :id");
+        // prepare secure SQL statement to prevent SQL injection
+        $stmt = $pdo->prepare("UPDATE tasks 
+        SET task_name = :task_name, category = :category, priority = :priority, due_date = :due_date, time_spent = :time_spent 
+        WHERE id = :id");
 
-$stmt->execute([
-    ':task_name' => $task_name,
-    ':category' => $category,
-    ':priority' => $priority,
-    ':due_date' => $due_date,
-    ':time_spent' => $time_spent,
-    ':id' => $id
-]);
+        $stmt->execute([
+            ':task_name' => $task_name,
+            ':category' => $category,
+            ':priority' => $priority,
+            ':due_date' => $due_date,
+            ':time_spent' => $time_spent,
+            ':id' => $id
+        ]);
 
-header("Location: index.php");
-exit();
+    header("Location: index.php");
+    exit();
 
 }
 

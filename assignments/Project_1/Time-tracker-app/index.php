@@ -2,8 +2,9 @@
 //Displays all tasks ordered by newest first
 //shows tasks in a table with edit and delete options
 //Priority is displayed using colored Bootstrap badges
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+require("auth.php");
 
 require("db.php");
 require("includes/header.php");

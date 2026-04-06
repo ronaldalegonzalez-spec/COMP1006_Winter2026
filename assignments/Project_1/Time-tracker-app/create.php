@@ -1,4 +1,6 @@
-<?php require("includes/header.php"); ?>
+<?php
+require("auth.php");
+require("includes/header.php"); ?>
 
 <!-- Displays form to create a new task -->
 <!-- Includes client-side validation and Google reCAPTCHA -->

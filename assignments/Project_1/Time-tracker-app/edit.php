@@ -3,6 +3,7 @@
 //Loads selected task data
 //Displays form pre-filled with existing values
 //Sends updated data to process.php
+require("auth.php");
 
 require("db.php");
 require("includes/header.php");

@@ -2,7 +2,7 @@
 //delete.php
 //Deletes selected task securely using prepared statement
 //Redirects back to index after deletion
-
+require("auth.php");
 require("db.php");
 
 if (isset($_GET['id'])) {
