@@ -1,7 +1,7 @@
 <?php
 require "db.php";
 require "includes/header.php";
-session_start();
+
 
 $errors = [];
 
@@ -9,34 +9,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    // Validación básica
+    // validation
     if (empty($email) || empty($password)) {
-        $errors[] = "Todos los campos son obligatorios.";
+        $errors[] = "All fields are required.";
     }
 
     // reCAPTCHA
-    $secretKey = "TU_SECRET_KEY";
+    $secretKey = "6Ldmi6gsAAAAAPHNEX6zxxmqRhNpRHlsh4G5Q4IP";
     $responseKey = $_POST['g-recaptcha-response'];
     $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$responseKey");
     $captcha_success = json_decode($verify);
     if (!$captcha_success->success) {
-        $errors[] = "Por favor confirma que no eres un robot.";
+        $errors[] = "Please confirm that you are not a robot.";
     }
 
-    // Si no hay errores
+    // if there are no errors, proceed with login
     if (empty($errors)) {
         $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->execute([':email' => $email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
-            // Login exitoso
+            // login successful, set session variables
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             header("Location: index.php");
             exit();
-        } else {
-            $errors[] = "Email o contraseña incorrectos.";
+        } 
+        else {
+            $errors[] = "Email or password is incorrect.";
         }
     }
 }
@@ -58,9 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="password" name="password" class="form-control" required>
     </div>
 
-    <div class="g-recaptcha" data-sitekey="TU_SITE_KEY"></div>
+    <div class="g-recaptcha" data-sitekey="6Ldmi6gsAAAAACAh9H_3WlYm_YPtirjovxrv39w0"></div>
 
-    <button type="submit" class="btn btn-primary mt-3">Iniciar Sesión</button>
+    <button type="submit" class="btn btn-primary mt-3">Login</button>
 </form>
 
 <?php require "includes/footer.php"; ?>

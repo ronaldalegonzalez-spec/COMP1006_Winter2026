@@ -33,6 +33,7 @@ $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Due Date</th>
             <th>Time Spent</th>
             <th>Actions</th>
+            <th>Image</th>
         </tr>
     </thead>
     <tbody>
@@ -60,6 +61,14 @@ $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td>
                 <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
                 <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Delete</a>
+            </td>
+            <!-- Display image thumbnail if exists -->
+            <td>
+            <?php if (!empty($row['image_path'])): ?>
+
+                <img src="<?php echo htmlspecialchars($row['image_path']); ?>" width="80">
+
+            <?php else: ?> No image <?php endif; ?>
             </td>
         </tr>
         <?php endforeach; ?>

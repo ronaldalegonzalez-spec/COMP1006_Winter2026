@@ -2,10 +2,10 @@
 // db.php
 // Database connection using PDO
 
-$host = "172.31.22.43";
-$dbname = "Ronald200631594";
-$username = "Ronald200631594";
-$password = "cEdLv7vTFS";
+$host = "localhost";
+$dbname = "time_tracker";
+$username = "time_user";
+$password = "TimePass123";
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);

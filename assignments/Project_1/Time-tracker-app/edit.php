@@ -31,7 +31,7 @@ if (!$task) {
 
 <h2 class="mb-4">Edit Task</h2>
 
-<form action="process.php" method="POST">
+<form action="process.php" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?php echo $task['id']; ?>">
 
     <div class="mb-3">
@@ -63,6 +63,19 @@ if (!$task) {
         <label class="form-label">Time Spent (hours)</label>
         <input type="number" name="time_spent" step="0.1" min="0" class="form-control" value="<?php echo $task['time_spent']; ?>" required>
     </div>
+
+    <div class="mb-3">
+    <label class="form-label">Update Image</label>
+    <input type="file" name="task_image" class="form-control">
+    </div>
+
+    <?php if (!empty($task['image_path'])): ?>
+    <div class="mb-3">
+        <label>Current Image:</label><br>
+        <img src="<?php echo htmlspecialchars($task['image_path']); ?>" width="100">
+    </div>
+    
+<?php endif; ?>
 
     <button type="submit" name="update_task" class="btn btn-success">Update Task</button>
     <a href="index.php" class="btn btn-secondary">Cancel</a>

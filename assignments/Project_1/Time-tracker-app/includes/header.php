@@ -1,3 +1,4 @@
+<?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,3 +13,13 @@
 
 <div class="container mt-5">
     <h1 class="mb-4 text-center">Time Tracker</h1>
+
+<div class="text-end mb-3">
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <span>Welcome, <?= htmlspecialchars($_SESSION['username']); ?></span>
+        <a href="logout.php" class="btn btn-danger btn-sm">Logout</a>
+    <?php else: ?>
+        <a href="login.php" class="btn btn-primary btn-sm">Login</a>
+        <a href="register.php" class="btn btn-secondary btn-sm">Register</a>
+    <?php endif; ?>
+</div>

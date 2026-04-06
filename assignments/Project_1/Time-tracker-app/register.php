@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require "db.php";
 require "includes/header.php";
 
@@ -10,37 +13,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Validación básica
     if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
-        $errors[] = "Todos los campos son obligatorios.";
+        $errors[] = "All fields are required.";
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Email no válido.";
+        $errors[] = "Invalid email format.";
     }
 
     if ($password !== $confirm_password) {
-        $errors[] = "Las contraseñas no coinciden.";
+        $errors[] = "Passwords do not match.";
     }
 
     // reCAPTCHA
-    $secretKey = "TU_SECRET_KEY";
+    $secretKey = "6Ldmi6gsAAAAAPHNEX6zxxmqRhNpRHlsh4G5Q4IP";
     $responseKey = $_POST['g-recaptcha-response'];
     $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$responseKey");
     $captcha_success = json_decode($verify);
     if (!$captcha_success->success) {
-        $errors[] = "Por favor confirma que no eres un robot.";
+        $errors[] = "Please confirm that you are not a robot.";
     }
 
-    // Si no hay errores
+    // if there are no errors, proceed with registration
     if (empty($errors)) {
-        // Revisar si username o email ya existen
+        // check if username or email already exists
         $stmt = $pdo->prepare("SELECT id FROM users WHERE username = :username OR email = :email");
         $stmt->execute([':username' => $username, ':email' => $email]);
+
         if ($stmt->fetch()) {
-            $errors[] = "El usuario o email ya existe.";
-        } else {
-            // Guardar usuario
+            $errors[] = "The username or email already exists.";
+        } 
+        
+        else {
+            // save user with hashed password
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
             $stmt->execute([
@@ -48,13 +53,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':email' => $email,
                 ':password' => $hashed_password
             ]);
-            echo "<div class='alert alert-success'>Registro exitoso. <a href='login.php'>Inicia sesión</a></div>";
+            echo "<div class='alert alert-success'>Registration successful. <a href='login.php'>Login</a></div>";
         }
     }
 }
 ?>
 
-<h2>Registro</h2>
+<h2>Registration</h2>
 
 <?php foreach ($errors as $error) {
     echo "<div class='alert alert-danger'>$error</div>";
@@ -78,9 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="password" name="confirm_password" class="form-control" required>
     </div>
 
-    <div class="g-recaptcha" data-sitekey="TU_SITE_KEY"></div>
+    <div class="g-recaptcha" data-sitekey="6Ldmi6gsAAAAACAh9H_3WlYm_YPtirjovxrv39w0"></div>
 
-    <button type="submit" class="btn btn-primary mt-3">Registrarse</button>
+    <button type="submit" class="btn btn-primary mt-3">Register</button>
 </form>
 
 <?php require "includes/footer.php"; ?>

@@ -7,7 +7,7 @@ require("includes/header.php"); ?>
 
 <h2 class="mb-4">Add New Task</h2>
 
-<form action="process.php" method="POST">
+<form action="process.php" method="POST" enctype="multipart/form-data">
 
     <div class="mb-3">
         <label class="form-label">Task Name</label>
@@ -40,6 +40,12 @@ require("includes/header.php"); ?>
         <label class="form-label">Time Spent (hours)</label>
         <input type="number" name="time_spent" step="0.1" min="0"  max="1000" class="form-control"  required>
         
+    </div>
+
+    <!-- image upload file -->
+    <div class="mb-3">
+    <label class="form-label">Task Image</label>
+    <input type="file" name="task_image" class="form-control" accept=".jpg,.jpeg,.png,.webp">
     </div>
 
 <!-- Google reCAPTCHA widget -->
