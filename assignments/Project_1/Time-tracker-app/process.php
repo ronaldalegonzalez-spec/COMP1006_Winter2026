@@ -68,7 +68,7 @@ if (isset($_POST['update_task'])) {
         // prepare secure SQL statement to prevent SQL injection
         $stmt = $pdo->prepare("UPDATE tasks 
         SET task_name = :task_name, category = :category, priority = :priority, due_date = :due_date, time_spent = :time_spent 
-        WHERE id = :id");
+        WHERE id = :id AND user_id = :user_id");
 
         $stmt->execute([
             ':task_name' => $task_name,
@@ -77,6 +77,7 @@ if (isset($_POST['update_task'])) {
             ':due_date' => $due_date,
             ':time_spent' => $time_spent,
             ':id' => $id
+            ':user_id' => $_SESSION['user_id']
         ]);
 
     header("Location: index.php");
@@ -90,6 +91,7 @@ if (isset($_POST['update_task'])) {
 if (isset($_POST['add_task'])) {
 
 //get form values
+    $user_id = $_SESSION['user_id'];
     $task_name = trim($_POST['task_name']);
     $category = trim($_POST['category']);
     $priority = trim($_POST['priority']);
@@ -146,7 +148,7 @@ if (isset($_POST['add_task'])) {
 
     $captcha_success = json_decode($verify);
 
-    // Optional: skip failure due to server domain limitations
+    // skip failure due to server domain limitations
     if ($captcha_success && !$captcha_success->success) {
         // You can log this if needed, but do not block user
         }
@@ -161,15 +163,16 @@ if (isset($_POST['add_task'])) {
     }
 
     // Prepare SQL statement
-    $stmt = $pdo->prepare("INSERT INTO tasks (task_name, category, priority, due_date, time_spent) 
-VALUES (:task_name, :category, :priority, :due_date, :time_spent)");
+    $stmt = $pdo->prepare("INSERT INTO tasks (task_name, category, priority, due_date, time_spent, user_id) 
+VALUES (:task_name, :category, :priority, :due_date, :time_spent, :user_id)");
 
 $stmt->execute([
     ':task_name' => $task_name,
     ':category' => $category,
     ':priority' => $priority,
     ':due_date' => $due_date,
-    ':time_spent' => $time_spent
+    ':time_spent' => $time_spent,
+    ':user_id' => $user_id
 ]);
 
 header("Location: index.php");

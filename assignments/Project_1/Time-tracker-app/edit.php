@@ -15,10 +15,11 @@ if (!isset($_GET['id'])) {
 }
 
 $id = $_GET['id'];
+$user_id = $_SESSION['user_id'];
 
 //Fetch task data securely using prepared statement
-$stmt = $pdo->prepare("SELECT * FROM tasks WHERE id = :id");
-$stmt->execute([':id' => $id]);
+$stmt = $pdo->prepare("SELECT * FROM tasks WHERE id = :id AND user_id = :user_id");
+$stmt->execute([':id' => $id, ':user_id' => $user_id]);
 
 $task = $stmt->fetch(PDO::FETCH_ASSOC);
 

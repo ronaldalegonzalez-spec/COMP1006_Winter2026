@@ -9,8 +9,12 @@ require("auth.php");
 require("db.php");
 require("includes/header.php");
 
+$user_id = $_SESSION['user_id'];
+
 //Fetch all tasks from database ordered by creation date
-$stmt = $pdo->query("SELECT * FROM tasks ORDER BY created_at DESC");
+$stmt = $pdo->prepare("SELECT * FROM tasks WHERE user_id = :user_id ORDER BY created_at DESC");
+$stmt->execute([':user_id' => $user_id]);
+
 $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
