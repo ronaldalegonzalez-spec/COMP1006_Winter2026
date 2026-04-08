@@ -3,7 +3,7 @@ require("auth.php");
 require("includes/header.php"); ?>
 
 <!-- Displays form to create a new task -->
-<!-- Includes client-side validation and Google reCAPTCHA -->
+<!-- Includes client-side validation and Google reCAPTCHA-->
 
 <h2 class="mb-4">Add New Task</h2>
 

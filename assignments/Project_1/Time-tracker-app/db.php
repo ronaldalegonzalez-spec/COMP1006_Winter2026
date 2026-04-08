@@ -1,6 +1,6 @@
 <?php
-// db.php
-// Database connection using PDO
+//db.php
+//Database connection using PDO
 
 $host = "localhost";
 $dbname = "time_tracker";

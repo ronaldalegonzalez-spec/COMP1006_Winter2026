@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Passwords do not match.";
     }
 
-    // reCAPTCHA
+    // reCAPTCHA verification
     $secretKey = "6Ldmi6gsAAAAAPHNEX6zxxmqRhNpRHlsh4G5Q4IP";
     $responseKey = $_POST['g-recaptcha-response'];
     $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$responseKey");

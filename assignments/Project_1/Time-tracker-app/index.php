@@ -68,7 +68,7 @@ $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <img src="<?php echo htmlspecialchars($row['image_path']); ?>" width="80">
 
-            <?php else: ?> No image <?php endif; ?>
+            <?php else: ?>No image<?php endif; ?>
             </td>
         </tr>
         <?php endforeach; ?>
