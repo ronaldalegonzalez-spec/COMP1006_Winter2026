@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
+ 
 <h2>Login</h2>
 
 <?php foreach ($errors as $error) {

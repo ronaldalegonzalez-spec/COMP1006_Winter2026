@@ -5,11 +5,12 @@
 require("auth.php");
 require("db.php");
 
+//Check if ID is provided
 if (isset($_GET['id'])) {
 
     $id = intval($_GET['id']);
     $user_id = $_SESSION['user_id'];
-    
+    // Securely delete task using prepared statement
     $stmt = $pdo->prepare("DELETE FROM tasks WHERE id = :id AND user_id = :user_id");
     $stmt->execute([':id' => $id,':user_id' => $user_id]);
 

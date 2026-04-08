@@ -28,7 +28,7 @@ if (!$task) {
     exit();
 }
 ?>
-
+<!-- HTML form pre-filled with existing task data -->
 <h2 class="mb-4">Edit Task</h2>
 
 <form action="process.php" method="POST" enctype="multipart/form-data">

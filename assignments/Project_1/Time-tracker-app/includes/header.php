@@ -13,7 +13,7 @@
 
 <div class="container mt-5">
     <h1 class="mb-4 text-center">Time Tracker</h1>
-
+<!-- Display welcome message and logout button if user is logged in -->
 <div class="text-end mb-3">
     <?php if (isset($_SESSION['user_id'])): ?>
         <span>Welcome, <?= htmlspecialchars($_SESSION['username']); ?></span>

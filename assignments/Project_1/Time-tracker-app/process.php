@@ -12,6 +12,7 @@ require("auth.php");
 require "db.php";
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
 //Update Task=============================================
 if (isset($_POST['update_task'])) {
 
@@ -24,7 +25,7 @@ if (isset($_POST['update_task'])) {
 
     $errors = [];
 
-    // VALIDACIONES
+    // VALIDATION
     if (!is_numeric($id)) {
         die("Invalid task ID.");
     }
@@ -41,7 +42,7 @@ if (isset($_POST['update_task'])) {
         $errors[] = "Time spent must be between 0 and 1000 hours.";
     }
 
-    // FECHA
+    
     $date = DateTime::createFromFormat('Y-m-d', $due_date);
     $errors_date = DateTime::getLastErrors();
 
@@ -54,7 +55,7 @@ if (isset($_POST['update_task'])) {
     $category = htmlspecialchars($category);
     $priority = htmlspecialchars($priority);
 
-    // ===== IMAGEN ACTUAL =====
+    //image 
     $stmtImg = $pdo->prepare("SELECT image_path FROM tasks WHERE id = :id AND user_id = :user_id");
     $stmtImg->execute([
         ':id' => $id,
@@ -64,7 +65,7 @@ if (isset($_POST['update_task'])) {
     $currentTask = $stmtImg->fetch(PDO::FETCH_ASSOC);
     $imagePath = $currentTask['image_path'];
 
-    // ===== NUEVA IMAGEN =====
+    // new image upload handling ============================================
     if (isset($_FILES['task_image']) && $_FILES['task_image']['error'] !== UPLOAD_ERR_NO_FILE) {
 
         if ($_FILES['task_image']['error'] !== UPLOAD_ERR_OK) {
@@ -84,7 +85,7 @@ if (isset($_POST['update_task'])) {
 
             if (empty($errors)) {
 
-                // borrar imagen anterior
+                //delete old image if exists
                 if (!empty($imagePath) && file_exists(__DIR__ . '/' . $imagePath)) {
                     unlink(__DIR__ . '/' . $imagePath);
                 }
@@ -103,7 +104,7 @@ if (isset($_POST['update_task'])) {
         }
     }
 
-    // 🚨 VALIDACIÓN FINAL (AQUÍ VA)
+    // reCAPTCHA
     if (!empty($errors)) {
         foreach ($errors as $error) {
             echo "<div class='alert alert-danger'>$error</div>";
@@ -111,7 +112,7 @@ if (isset($_POST['update_task'])) {
         exit();
     }
 
-    // ✅ UPDATE CORRECTO
+    // update task in database
     $stmt = $pdo->prepare("UPDATE tasks 
         SET task_name = :task_name,
             category = :category,
@@ -140,7 +141,7 @@ if (isset($_POST['update_task'])) {
 //Check if form was submitted==============================================
 if (isset($_POST['add_task'])) {
 
-//get form values
+    //get form values
     $user_id = $_SESSION['user_id'];
     $task_name = trim($_POST['task_name']);
     $category = trim($_POST['category']);
@@ -174,11 +175,11 @@ if (isset($_POST['add_task'])) {
     $category = htmlspecialchars($category);
     $priority = htmlspecialchars($priority);
 
-//Verify Google reCAPTCHA response
+    //Verify Google reCAPTCHA response
     $secretKey = "6Ldmi6gsAAAAAPHNEX6zxxmqRhNpRHlsh4G5Q4IP";
     $responseKey = $_POST['g-recaptcha-response'];
 
-    // ONLY if present
+    // only if present
     if (!empty($responseKey)) {
 
         $ch = curl_init();

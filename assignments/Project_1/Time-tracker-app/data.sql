@@ -1,3 +1,5 @@
+
+-- SQL script to create the necessary tables for the Time Tracker App
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -6,7 +8,7 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- Tasks table with a foreign key reference to the users table
 CREATE TABLE tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
     task_name VARCHAR(100),
